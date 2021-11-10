@@ -34,12 +34,19 @@ metadata:
   labels:
     app: bgg
     tier: backend
+
 spec:
   replicas: 3
   selector: 
     matchLabels:
       app: bgg
       tier: backend
+  minReadySeconds: 5
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
 
   template:
     metadata:
@@ -51,7 +58,8 @@ spec:
     spec:
       containers:
       - name: bggapp-container
-        image: stackupiss/bgg-backend:v1
+        #image: stackupiss/bgg-backend:v1
+        image: stackupiss/bgg-backend:v2
         imagePullPolicy: IfNotPresent
         ports: 
         - containerPort: 3000
