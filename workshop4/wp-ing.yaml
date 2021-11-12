@@ -1,0 +1,21 @@
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: wordpress-ing
+  labels:
+    app: wordpress
+spec:
+  ingressClassName: nginx
+  rules:
+    - host: cwk-wp-144.126.243.119.nip.io
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service: 
+                name: wordpress
+                port: 
+                  number: 80
+---

@@ -1,0 +1,11 @@
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: wp-secret
+  labels:
+    app: wordpress
+type: Opaque
+data: 
+  password: Y2hhbmdlaXQ=
+---
