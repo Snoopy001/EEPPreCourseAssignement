@@ -21,12 +21,12 @@ metadata:
   labels:
     app: wp-svc
 spec:
+  type: ClusterIP
   ports:
     - port: 80
       targetPort: 80
   selector:
     app: wp-pod
-  type: ClusterIP
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -39,29 +39,28 @@ spec:
   selector:
     matchLabels:
       app: wp-pod
-  strategy:
-    type: Recreate
   template:
     metadata:
       name: wp-pod
       labels:
         app: wp-pod
     spec:
+      volumes:
+      - name: wordpress-persistent-storage
+        persistentVolumeClaim:
+          claimName: wp-pvc
       containers:
       - image: wordpress:5.8
         name: wordpress-container
         imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 80
         envFrom:
         - configMapRef:
             name: wp-cm
         - secretRef:
             name: wp-secret
-        ports:
-        - containerPort: 80
         volumeMounts:
         - name: wordpress-persistent-storage
           mountPath: /var/www/html
-      volumes:
-      - name: wordpress-persistent-storage
-        persistentVolumeClaim:
-          claimName: wp-pvc
+

@@ -5,6 +5,8 @@ metadata:
   name: wordpress-ing
   labels:
     app: wordpress
+  annotations:
+    nginx.ingress.kubernetes.io/limit-connections: "10"
 spec:
   ingressClassName: nginx
   rules:
@@ -15,7 +17,7 @@ spec:
             pathType: Prefix
             backend:
               service: 
-                name: wordpress
+                name: wp-svc
                 port: 
                   number: 80
 ---
