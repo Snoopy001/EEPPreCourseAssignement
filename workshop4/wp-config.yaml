@@ -4,8 +4,21 @@ kind: Secret
 metadata:
   name: wp-secret
   labels:
-    app: wordpress
+    app: wp-secret
 type: Opaque
 data: 
-  password: Y2hhbmdlaXQ=
+  ROOT_PASSWORD: Y2hhbmdlaXQ= 
+  WORDPRESS_DB_PASSWORD: Y2hhbmdlaXQ=
+
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: wp-cm
+  labels:
+    name: wp-cm
+data:
+  WORDPRESS_DB_HOST: wpdb-cluster-mysql-master
+  WORDPRESS_DB_USER: root
+  WORDPRESS_DB_NAME: wpdb
 ---
